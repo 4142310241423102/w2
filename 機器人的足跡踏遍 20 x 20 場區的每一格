@@ -179,16 +179,26 @@ w.robot(1, 1)        # 在 (1,1) 放置一台 robot
 
 r = AnimatedRobot(w, 1, 1)
 
-for i in range(10):
-   r.move(19)
-   r.turn_left()
-   r.move(1)
-   r.turn_left()
-   r.move(19)
-   r.turn_left()
-   r.turn_left()
-   r.turn_left()
-   r.move(1)
-   r.turn_left()
-   r.turn_left()
-   r.turn_left()
+
+def walk_all_grid(robot, world):
+    """讓機器人蛇形走完整個 grid"""
+    for row in range(world.height):
+        robot.move(world.width - 1)
+        if row < world.height - 1:
+            if row % 2 == 0:
+                # 面向東 → 上一格 → 面向西
+                robot.turn_left()
+                robot.move(1)
+                robot.turn_left()
+            else:
+                # 面向西 → 上一格 → 面向東
+                robot.turn_left()
+                robot.turn_left()
+                robot.turn_left()
+                robot.move(1)
+                robot.turn_left()
+                robot.turn_left()
+                robot.turn_left()
+
+# === 呼叫 ===
+walk_all_grid(r, w)
